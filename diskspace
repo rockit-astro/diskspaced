@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+#
+# This file is part of diskspaced.
+#
+# diskspaced is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# diskspaced is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with diskspaced.  If not, see <http://www.gnu.org/licenses/>.
+
+"""Commandline client for querying the latest disk usage data"""
+
+import datetime
+import json
+import os
+import sys
+import Pyro4
+
+PYRO_HOST = '192.168.0.101'
+PYRO_PORT = 9008
+PYRO_NAME = 'diskspace_daemon'
+PYRO_COMM_TIMEOUT = 5
+
+SCRIPT_NAME = os.path.basename(sys.argv[0])
+
+def print_status():
+    """Prints the current disk usage in human-readable form"""
+    latest = None
+    try:
+        with Pyro4.Proxy('PYRO:' + PYRO_NAME + '@' + PYRO_HOST + ':' + str(PYRO_PORT)) as diskspace:
+            latest = diskspace.last_measurement()
+    except Pyro4.errors.CommunicationError:
+        print('error: unable to communicate with the disk space daemon')
+        return 1
+
+    if latest is not None:
+        date = datetime.datetime.strptime(latest['date'], '%Y-%m-%dT%H:%M:%SZ')
+        print('Data received \033[1m{}\033[0m:'.format(date))
+        print('Data partition: \033[1m{} / {} GiB ({}%) remaining\033[0m'.format(
+            round(latest['data_fs_available_bytes'] / 2**30),
+            round(latest['data_fs_total_bytes'] / 2**30),
+            latest['data_fs_percent_available']))
+        print()
+    else:
+        print('error: failed to query data')
+    return 0
+
+def print_json():
+    """Prints the latest environment data in machine-readable form"""
+    latest = None
+    try:
+        with Pyro4.Proxy('PYRO:' + PYRO_NAME + '@' + PYRO_HOST + ':' + str(PYRO_PORT)) as diskspace:
+            latest = diskspace.last_measurement()
+    except Pyro4.errors.CommunicationError:
+        print('error: unable to communicate with the disk space daemon')
+        return 1
+
+    print(json.dumps(latest))
+
+    return 0
+
+def print_usage(name):
+    """Prints the utility help"""
+    print('Usage: {} <command>'.format(name))
+    print()
+    print('   status      print a human-readable summary of the disk usage')
+    print('   json        print a machine-readable summary of the disk usage')
+    print()
+
+    return 1
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        sys.exit(print_usage(SCRIPT_NAME))
+
+    Pyro4.config.COMMTIMEOUT = PYRO_COMM_TIMEOUT
+    if sys.argv[1] == 'status':
+        sys.exit(print_status())
+    elif sys.argv[1] == 'json':
+        sys.exit(print_json())
+
+    # Command not found
+    sys.exit(print_usage(SCRIPT_NAME))
+
