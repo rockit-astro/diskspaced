@@ -27,7 +27,7 @@ import Pyro4
 
 PYRO_HOST = '192.168.0.101'
 PYRO_PORT = 9008
-PYRO_NAME = 'diskspace_daemon'
+PYRO_NAME = 'onemetre_diskspace_daemon'
 
 # Filesystem to monitor
 DATA_FILESYSTEM = '/'
