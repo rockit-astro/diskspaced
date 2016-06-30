@@ -22,11 +22,7 @@ import json
 import os
 import sys
 import Pyro4
-
-PYRO_HOST = '192.168.0.101'
-PYRO_PORT = 9008
-PYRO_NAME = 'onemetre_diskspace_daemon'
-PYRO_COMM_TIMEOUT = 5
+import warwick.observatory as observatory
 
 SCRIPT_NAME = os.path.basename(sys.argv[0])
 sys.excepthook = Pyro4.util.excepthook
@@ -35,7 +31,7 @@ def print_status():
     """Prints the current disk usage in human-readable form"""
     latest = None
     try:
-        with Pyro4.Proxy('PYRO:' + PYRO_NAME + '@' + PYRO_HOST + ':' + str(PYRO_PORT)) as diskspace:
+        with observatory.daemons.onemetre_tcs_diskspace.connect() as diskspace:
             latest = diskspace.last_measurement()
     except Pyro4.errors.CommunicationError:
         print('error: unable to communicate with the disk space daemon')
@@ -57,7 +53,7 @@ def print_json():
     """Prints the latest environment data in machine-readable form"""
     latest = None
     try:
-        with Pyro4.Proxy('PYRO:' + PYRO_NAME + '@' + PYRO_HOST + ':' + str(PYRO_PORT)) as diskspace:
+        with observatory.daemons.onemetre_tcs_diskspace.connect() as diskspace:
             latest = diskspace.last_measurement()
     except Pyro4.errors.CommunicationError:
         print('error: unable to communicate with the disk space daemon')
@@ -81,7 +77,6 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         sys.exit(print_usage(SCRIPT_NAME))
 
-    Pyro4.config.COMMTIMEOUT = PYRO_COMM_TIMEOUT
     if sys.argv[1] == 'status':
         sys.exit(print_status())
     elif sys.argv[1] == 'json':

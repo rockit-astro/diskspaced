@@ -1,6 +1,6 @@
 Name:      onemetre-diskspace-server
-Version:   1.3
-Release:   4
+Version:   1.4
+Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server for the Warwick one-metre telescope.
 License:   GPL-3.0
@@ -26,7 +26,6 @@ mkdir -p %{buildroot}%{_unitdir}
 
 %post
 %service_add_post diskspaced.service
-%fillup_and_insserv -f -y diskspaced.service
 
 %preun
 %stop_on_removal diskspaced.service

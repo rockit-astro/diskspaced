@@ -24,16 +24,15 @@
 import datetime
 import os
 import Pyro4
-
-PYRO_HOST = '192.168.0.101'
-PYRO_PORT = 9008
-PYRO_NAME = 'onemetre_diskspace_daemon'
+import warwick.observatory as observatory
 
 # Filesystem to monitor
 DATA_FILESYSTEM = '/'
 
 class DiskUsageDaemon:
     """Responds to disk usage queries"""
+
+    @Pyro4.expose
     def last_measurement(self):
         """Query the latest valid measurement.
         May return None if no data is available"""
@@ -55,19 +54,10 @@ class DiskUsageDaemon:
         except Exception as exception:
             print('{} ERROR: failed to query disk usage: {}' \
                   .format(datetime.datetime.utcnow(), str(exception)))
+            observatory.log.error('diskspaced', 'Failed to query disk usage (' \
+                                  + str(exception) + ')')
             return None
 
-def spawn_daemon():
-    """Spawns the daemon and registers it with Pyro"""
-    Pyro4.config.COMMTIMEOUT = 5
-
-    pyro = Pyro4.Daemon(host=PYRO_HOST, port=PYRO_PORT)
-    diskspace = DiskUsageDaemon()
-    uri = pyro.register(diskspace, objectId=PYRO_NAME)
-
-    print('Starting disk usage daemon with Pyro ID:', uri)
-    pyro.requestLoop()
-    print('Stopping disk usage daemon with Pyro ID:', uri)
-
 if __name__ == '__main__':
-    spawn_daemon()
+    observatory.daemons.onemetre_tcs_diskspace.launch(DiskUsageDaemon())
+
