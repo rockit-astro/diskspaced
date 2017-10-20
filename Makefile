@@ -6,8 +6,8 @@ RPMBUILD = rpmbuild --define "_topdir %(pwd)/build" \
 
 all:
 	mkdir -p build
-	${RPMBUILD} -ba diskspace-server.spec
-	${RPMBUILD} -ba diskspace-client.spec
+	${RPMBUILD} -ba onemetre-diskspace-server.spec
+	${RPMBUILD} -ba onemetre-diskspace-client.spec
 	mv build/noarch/*.rpm .
 	rm -rf build
 
