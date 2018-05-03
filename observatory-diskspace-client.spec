@@ -1,20 +1,15 @@
-Name:      onemetre-diskspace-client
-Version:   2.0
+Name:      observatory-diskspace-client
+Version:   2.1
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
-Summary:   Disk space client for the Warwick one-metre telescope.
+Summary:   Disk space client for the Warwick one-metre and RASA prototype telescopes.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
-%if 0%{?suse_version}
-Requires:  python3, python34-Pyro4, python34-warwick-observatory-common
-%endif
-%if 0%{?centos_ver}
 Requires:  python34, python34-Pyro4, python34-warwick-observatory-common
-%endif
 
 %description
-Part of the observatory software for the Warwick one-meter telescope.
+Part of the observatory software for the Warwick one-meter and RASA prototype telescopes.
 
 diskspace is a commandline utility that queries the disk space daemon.
 

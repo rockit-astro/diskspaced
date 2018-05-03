@@ -24,14 +24,19 @@ import sys
 import Pyro4
 from warwick.observatory.common import daemons
 
+DAEMONS = {
+    'onemetre': daemons.onemetre_tcs_diskspace,
+    'rasa': daemons.rasa_diskspace
+}
+
 SCRIPT_NAME = os.path.basename(sys.argv[0])
 sys.excepthook = Pyro4.util.excepthook
 
-def print_status():
+def print_status(daemon):
     """Prints the current disk usage in human-readable form"""
     latest = None
     try:
-        with daemons.onemetre_tcs_diskspace.connect() as diskspace:
+        with daemon.connect() as diskspace:
             latest = diskspace.last_measurement()
     except Pyro4.errors.CommunicationError:
         print('error: unable to communicate with the disk space daemon')
@@ -49,11 +54,11 @@ def print_status():
         print('error: failed to query data')
     return 0
 
-def print_json():
+def print_json(daemon):
     """Prints the latest environment data in machine-readable form"""
     latest = None
     try:
-        with daemons.onemetre_tcs_diskspace.connect() as diskspace:
+        with daemon.connect() as diskspace:
             latest = diskspace.last_measurement()
     except Pyro4.errors.CommunicationError:
         print('error: unable to communicate with the disk space daemon')
@@ -65,7 +70,7 @@ def print_json():
 
 def print_usage(name):
     """Prints the utility help"""
-    print('Usage: {} <command>'.format(name))
+    print('Usage: {} [onemetre|rasa] <command>'.format(name))
     print()
     print('   status      print a human-readable summary of the disk usage')
     print('   json        print a machine-readable summary of the disk usage')
@@ -74,13 +79,13 @@ def print_usage(name):
     return 1
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
+    if len(sys.argv) < 3 or sys.argv[1] not in DAEMONS:
         sys.exit(print_usage(SCRIPT_NAME))
 
-    if sys.argv[1] == 'status':
-        sys.exit(print_status())
-    elif sys.argv[1] == 'json':
-        sys.exit(print_json())
+    if sys.argv[2] == 'status':
+        sys.exit(print_status(DAEMONS[sys.argv[1]]))
+    elif sys.argv[2] == 'json':
+        sys.exit(print_json(DAEMONS[sys.argv[1]]))
 
     # Command not found
     sys.exit(print_usage(SCRIPT_NAME))

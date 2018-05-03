@@ -19,8 +19,9 @@
 # pylint: disable=too-few-public-methods
 # pylint: disable=no-self-use
 
-"""Front end for tcs disk usage of the Warwick one-metre telescope"""
+"""Front end for tcs disk usage of the Warwick one-metre and RASA telescopes"""
 
+import argparse
 import datetime
 import os
 import Pyro4
@@ -28,6 +29,10 @@ from warwick.observatory.common import daemons, log
 
 # Filesystem to monitor
 DATA_FILESYSTEM = '/'
+DAEMONS = {
+    'onemetre': daemons.onemetre_tcs_diskspace,
+    'rasa': daemons.rasa_diskspace
+}
 
 class DiskUsageDaemon:
     """Responds to disk usage queries"""
@@ -58,4 +63,7 @@ class DiskUsageDaemon:
             return None
 
 if __name__ == '__main__':
-    daemons.onemetre_tcs_diskspace.launch(DiskUsageDaemon())
+    parser = argparse.ArgumentParser(description='Diskspace Server')
+    parser.add_argument('telescope', choices=DAEMONS.keys(), help='Select a telescope')
+    args = parser.parse_args()
+    DAEMONS[args.telescope].launch(DiskUsageDaemon())

@@ -1,15 +1,15 @@
-Name:      onemetre-diskspace-server
-Version:   2.1
+Name:      rasa-diskspace-server
+Version:   2.0
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
-Summary:   Disk usage server for the Warwick one-metre telescope.
+Summary:   Disk usage server for the RASA prototype telescope.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
 Requires:  python34, python34-Pyro4, python34-warwick-observatory-common, observatory-log-client, %{?systemd_requires}
 
 %description
-Part of the observatory software for the Warwick one-metre telescope.
+Part of the observatory software for the RASA prototype telescope.
 
 diskspaced is a Pyro frontend for querying the current disk usage.
 
@@ -18,21 +18,21 @@ mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_unitdir}
 
 %{__install} %{_sourcedir}/diskspaced %{buildroot}%{_bindir}
-%{__install} %{_sourcedir}/diskspaced.service %{buildroot}%{_unitdir}
+%{__install} %{_sourcedir}/rasa-diskspaced.service %{buildroot}%{_unitdir}
 
 %post
-%systemd_post diskspaced.service
+%systemd_post rasa-diskspaced.service
 
 %preun
-%systemd_preun diskspaced.service
+%systemd_preun rasa-diskspaced.service
 
 %postun
-%systemd_postun_with_restart diskspaced.service
+%systemd_postun_with_restart rasa-diskspaced.service
 
 %files
 %defattr(0755,root,root,-)
 %{_bindir}/diskspaced
 %defattr(-,root,root,-)
-%{_unitdir}/diskspaced.service
+%{_unitdir}/rasa-diskspaced.service
 
 %changelog
