@@ -1,5 +1,5 @@
 Name:      rasa-diskspace-server
-Version:   2.0
+Version:   2.0.1
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server for the RASA prototype telescope.

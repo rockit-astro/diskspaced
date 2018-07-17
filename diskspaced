@@ -28,7 +28,11 @@ import Pyro4
 from warwick.observatory.common import daemons, log
 
 # Filesystem to monitor
-DATA_FILESYSTEM = '/'
+DATA_FILESYSTEM = {
+    'onemetre': '/',
+    'rasa': '/data'
+}
+
 DAEMONS = {
     'onemetre': daemons.onemetre_tcs_diskspace,
     'rasa': daemons.rasa_diskspace
@@ -36,6 +40,8 @@ DAEMONS = {
 
 class DiskUsageDaemon:
     """Responds to disk usage queries"""
+    def __init__(self, filesystem):
+        self._filesystem = filesystem
 
     @Pyro4.expose
     def last_measurement(self):
@@ -44,7 +50,7 @@ class DiskUsageDaemon:
         now = datetime.datetime.utcnow
         try:
             date = now()
-            data = os.statvfs(DATA_FILESYSTEM)
+            data = os.statvfs(self._filesystem)
             data_available = data.f_frsize * data.f_bavail
             data_total = data.f_frsize * data.f_blocks
             data_percent = round(data_available * 100 / data_total)
@@ -66,4 +72,4 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Diskspace Server')
     parser.add_argument('telescope', choices=DAEMONS.keys(), help='Select a telescope')
     args = parser.parse_args()
-    DAEMONS[args.telescope].launch(DiskUsageDaemon())
+    DAEMONS[args.telescope].launch(DiskUsageDaemon(DATA_FILESYSTEM[args.telescope]))
