@@ -1,12 +1,13 @@
 Name:      onemetre-diskspace-server
-Version:   2.1.1
+Version:   2.2.0
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server for the Warwick one-metre telescope.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
-Requires:  python34, python34-Pyro4, python34-warwick-observatory-common, observatory-log-client, %{?systemd_requires}
+Requires:  python36, python36-Pyro4, python36-warwick-observatory-common
+Requires:  observatory-log-client, %{?systemd_requires}
 
 %description
 Part of the observatory software for the Warwick one-metre telescope.
