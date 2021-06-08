@@ -1,0 +1,5 @@
+{
+  "daemon": "localhost_test2",
+  "log_name": "diskspaced@test",
+  "data_root_path": "/home/ops"
+}

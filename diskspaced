@@ -1,47 +1,34 @@
 #!/usr/bin/env python3.6
 #
-# This file is part of superwaspd.
+# This file is part of diskspaced.
 #
-# superwaspd is free software: you can redistribute it and/or modify
+# diskspaced is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# superwaspd is distributed in the hope that it will be useful,
+# diskspaced is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with superwaspd.  If not, see <http://www.gnu.org/licenses/>.
+# along with diskspaced.  If not, see <http://www.gnu.org/licenses/>.
 
-# pylint: disable=broad-except
-# pylint: disable=too-few-public-methods
-# pylint: disable=no-self-use
-
-"""Front end for tcs disk usage of the Warwick one-metre and RASA telescopes"""
+"""Data directory disk space monitor"""
 
 import argparse
 import datetime
 import os
 import Pyro4
-from warwick.observatory.common import daemons, log
+from warwick.observatory.common import log
+from warwick.observatory.diskspace import Config
 
-# Filesystem to monitor
-DATA_FILESYSTEM = {
-    'onemetre': '/',
-    'rasa': '/data'
-}
 
-DAEMONS = {
-    'onemetre': daemons.onemetre_tcs_diskspace,
-    'rasa': daemons.rasa_diskspace
-}
-
-class DiskUsageDaemon:
+class DiskSpaceDaemon:
     """Responds to disk usage queries"""
-    def __init__(self, filesystem):
-        self._filesystem = filesystem
+    def __init__(self, config):
+        self._config = config
 
     @Pyro4.expose
     def last_measurement(self):
@@ -49,27 +36,26 @@ class DiskUsageDaemon:
         May return None if no data is available"""
         now = datetime.datetime.utcnow
         try:
-            date = now()
-            data = os.statvfs(self._filesystem)
+            data = os.statvfs(self._config.data_root_path)
             data_available = data.f_frsize * data.f_bavail
             data_total = data.f_frsize * data.f_blocks
             data_percent = round(data_available * 100 / data_total)
 
             return {
-                'date': date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                'date': now().strftime('%Y-%m-%dT%H:%M:%SZ'),
                 'data_fs_available_bytes': data_available,
                 'data_fs_total_bytes': data_total,
                 'data_fs_percent_available': data_percent,
             }
 
-        except Exception as exception:
-            print('{} ERROR: failed to query disk usage: {}' \
-                  .format(datetime.datetime.utcnow(), str(exception)))
-            log.error('diskspaced', 'Failed to query disk usage')
+        except Exception:
+            log.error(self._config.log_name, 'Failed to query disk usage')
             return None
 
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Diskspace Server')
-    parser.add_argument('telescope', choices=DAEMONS.keys(), help='Select a telescope')
+    parser = argparse.ArgumentParser(description='Disk space daemon')
+    parser.add_argument('config', help='Path to configuration json file')
     args = parser.parse_args()
-    DAEMONS[args.telescope].launch(DiskUsageDaemon(DATA_FILESYSTEM[args.telescope]))
+    c = Config(args.config)
+    c.daemon.launch(DiskSpaceDaemon(c))

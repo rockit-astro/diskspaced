@@ -1,45 +1,73 @@
-## Disk usage daemon [![Travis CI build status](https://travis-ci.org/warwick-one-metre/diskspaced.svg?branch=master)](https://travis-ci.org/warwick-one-metre/diskspaced)
-
-Part of the observatory software for the Warwick one-meter and RASA prototype telescopes.
+## Disk usage daemon
 
 `diskspaced` is a Pyro frontend for querying the current disk usage.
 
 `diskspace`  is a commandline utility that queries the disk space daemon.
 
-See [Software Infrastructure](https://github.com/warwick-one-metre/docs/wiki/Software-Infrastructure) for an overview of the W1m software architecture and instructions for developing and deploying the code.
+See [Software Infrastructure](https://github.com/warwick-one-metre/docs/wiki/Software-Infrastructure) for an overview of the software architecture and instructions for developing and deploying the code.
 
-### Software Setup (W1m)
+### Configuration
 
-After installing `onemetre-diskspace-server`, the `diskspaced` must be enabled using:
-```
-sudo systemctl enable diskspaced.service
+Configuration is read from json files that are installed by default to `/etc/diskspaced`.
+A configuration file is specified when launching the server, and the `diskspace` frontend will search this location when launched.
+
+The configuration options are:
+```python
+{
+  "daemon": "localhost_test2", # Run the server as this daemon. Daemon types are registered in `warwick.observatory.common.daemons`.
+  "log_name": "diskspaced@test", # The name to use when writing messages to the observatory log.
+  "data_root_path": "/home/ops" # The file system path to monitor.
+}
 ```
 
-The service will automatically start on system boot, or you can start it immediately using:
+### Initial Installation
+
+The automated packaging scripts will push 4 RPM packages to the observatory package repository:
+
+| Package           | Description |
+| ----------------- | ------ |
+| observatory-diskspace-server | Contains the `diskspaced` server and systemd service file. |
+| observatory-diskspace-client | Contains the `diskspace` commandline utility for querying the server. |
+| python3-warwick-observatory-diskspace | Contains the python module with shared code. |
+| onemetre-diskspace-data | Contains the json configuration for the W1m TCS. |
+
+The `observatory-diskspace-server` and `observatory-diskspace-client` and `onemetre-diskspace-data` packages should be installed on the `onemetre-tcs` machine.
+
+After installing packages, the systemd service should be enabled:
+
 ```
-sudo systemctl start diskspaced.service
+sudo systemctl enable diskspaced@<config>
+sudo systemctl start diskspaced@<config>
 ```
 
-Finally, open a port in the firewall so that other machines on the network can access the daemon:
+where `config` is the name of the json file for the appropriate telescope.
+
+Now open a port in the firewall:
 ```
-sudo firewall-cmd --zone=public --add-port=9008/tcp --permanent
+sudo firewall-cmd --zone=public --add-port=<port>/tcp --permanent
 sudo firewall-cmd --reload
 ```
+where `port` is the port defined in `warwick.observatory.common.daemons` for the daemon specified in the server config.
 
-### Software Setup (RASA)
+### Upgrading Installation
 
-After installing `rasa-diskspace-server`, the `diskspaced` must be enabled using:
+New RPM packages are automatically created and pushed to the package repository for each push to the `master` branch.
+These can be upgraded locally using the standard system update procedure:
 ```
-sudo systemctl enable rasa-diskspaced.service
-```
-
-The service will automatically start on system boot, or you can start it immediately using:
-```
-sudo systemctl start rasa-diskspaced.service
+sudo yum clean expire-cache
+sudo yum update
 ```
 
-Finally, open a port in the firewall so that other machines on the network can access the daemon:
+The daemon should then be restarted to use the newly installed code:
 ```
-sudo firewall-cmd --zone=public --add-port=9039/tcp --permanent
-sudo firewall-cmd --reload
+sudo systemctl stop diskspaced@<config>
+sudo systemctl start diskspaced@<config>
+```
+
+### Testing Locally
+
+The camera server and client can be run directly from a git clone:
+```
+./diskspaced test.json
+DISKSPACED_CONFIG_PATH=./test.json ./diskspace status
 ```
