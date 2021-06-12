@@ -1,13 +1,12 @@
 Name:      observatory-diskspace-server
-Version:   20210608
+Version:   20210612
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
-Requires:  python3, python3-Pyro4, python3-warwick-observatory-diskspace, python3-warwick-observatory-common
-Requires:  observatory-log-client, %{?systemd_requires}
+Requires:  python3, python3-Pyro4, python3-warwick-observatory-diskspace, python3-warwick-observatory-common, %{?systemd_requires}
 
 %description
 
