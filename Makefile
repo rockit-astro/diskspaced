@@ -10,6 +10,7 @@ all:
 	${RPMBUILD} -ba observatory-diskspace-client.spec
 	${RPMBUILD} -ba python3-warwick-observatory-diskspace.spec
 	${RPMBUILD} -ba onemetre-diskspace-data.spec
+	${RPMBUILD} -ba clasp-diskspace-data.spec
 	mv build/noarch/*.rpm .
 	rm -rf build
 
