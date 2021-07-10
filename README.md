@@ -22,7 +22,7 @@ The configuration options are:
 
 ### Initial Installation
 
-The automated packaging scripts will push 4 RPM packages to the observatory package repository:
+The automated packaging scripts will push 6 RPM packages to the observatory package repository:
 
 | Package           | Description |
 | ----------------- | ------ |
@@ -31,9 +31,13 @@ The automated packaging scripts will push 4 RPM packages to the observatory pack
 | python3-warwick-observatory-diskspace | Contains the python module with shared code. |
 | onemetre-diskspace-data | Contains the json configuration for the W1m TCS. |
 | clasp-diskspace-data | Contains the json configuration for the CLASP TCS. |
+| superwasp-diskspace-data | Contains the json configuration for the SuperWASP TCS. |
 
 The `observatory-diskspace-server` and `observatory-diskspace-client` and `onemetre-diskspace-data` packages should be installed on the `onemetre-tcs` machine.
+
 The `observatory-diskspace-server` and `observatory-diskspace-client` and `clasp-diskspace-data` packages should be installed on the `clasp-tcs` machine.
+
+The `observatory-diskspace-server` and `observatory-diskspace-client` and `superwasp-diskspace-data` packages should be installed on the `superwasp-tcs` machine.
 
 After installing packages, the systemd service should be enabled:
 
