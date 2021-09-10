@@ -1,5 +1,5 @@
 Name:      onemetre-diskspace-data
-Version:   20210608
+Version:   20210910
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server.
