@@ -1,5 +1,5 @@
 Name:      clasp-diskspace-data
-Version:   20220520
+Version:   20220630
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server.
