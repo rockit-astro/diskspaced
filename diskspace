@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 #
 # This file is part of diskspaced.
 #
@@ -35,12 +35,12 @@ def run_command(command):
     if 'DISKSPACED_CONFIG_PATH' in os.environ:
         config = Config(os.environ['DISKSPACED_CONFIG_PATH'])
     else:
-        # Load the config file defined in the POWERD_CONFIG_PATH environment variable or from the
-        # default system location (/etc/powerd/). Exit with an error if zero or multiple are found.
+        # Load the config file defined in the DISKSPACED_CONFIG_PATH environment variable or from the
+        # default system location (/etc/diskspaced/). Exit with an error if zero or multiple are found.
         files = glob.glob("/etc/diskspaced/*.json")
         if len(files) != 1:
             print('error: failed to guess the default config file. ' +
-                  'Run as DISKSPACED_CONFIG_PATH=/path/to/config.json power <command>')
+                  'Run as DISKSPACED_CONFIG_PATH=/path/to/config.json diskspace <command>')
             return 1
 
         config = Config(files[0])
