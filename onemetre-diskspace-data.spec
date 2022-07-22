@@ -2,7 +2,7 @@ Name:      onemetre-diskspace-data
 Version:   20210910
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
-Summary:   Disk usage server.
+Summary:   Diskspace configuration for the W1m telescope.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
