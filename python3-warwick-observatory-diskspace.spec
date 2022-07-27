@@ -1,5 +1,5 @@
 Name:           python3-warwick-observatory-diskspace
-Version:        20210608
+Version:        20220727
 Release:        0
 License:        GPL3
 Summary:        Common backend code for the disk space daemon

@@ -1,12 +1,12 @@
 Name:      observatory-diskspace-client
-Version:   20220630
+Version:   20220727
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk space client.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
-Requires:  python3, python3-Pyro4, python3-warwick-observatory-diskspace, python3-warwick-observatory-common
+Requires:  python3 python3-Pyro4 python3-warwick-observatory-diskspace python3-warwick-observatory-common
 
 %description
 

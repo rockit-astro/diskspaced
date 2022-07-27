@@ -6,7 +6,7 @@ Summary:   Disk usage server.
 License:   GPL-3.0
 Group:     Unspecified
 BuildArch: noarch
-Requires:  python3, python3-Pyro4, python3-warwick-observatory-diskspace, python3-warwick-observatory-common, %{?systemd_requires}
+Requires:  python3 python3-Pyro4 python3-warwick-observatory-diskspace python3-warwick-observatory-common
 
 %description
 

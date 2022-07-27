@@ -33,7 +33,7 @@ sys.excepthook = Pyro4.util.excepthook
 def run_command(command):
     """Runs a daemon command, handling error messages"""
     if 'DISKSPACED_CONFIG_PATH' in os.environ:
-        config = Config(os.environ['DISKSPACED_CONFIG_PATH'])
+        config = Config(os.environ['DISKSPACED_CONFIG_PATH'], validate_directories=False)
     else:
         # Load the config file defined in the DISKSPACED_CONFIG_PATH environment variable or from the
         # default system location (/etc/diskspaced/). Exit with an error if zero or multiple are found.
@@ -43,7 +43,7 @@ def run_command(command):
                   'Run as DISKSPACED_CONFIG_PATH=/path/to/config.json diskspace <command>')
             return 1
 
-        config = Config(files[0])
+        config = Config(files[0], validate_directories=False)
 
     try:
         ret = command(config)
