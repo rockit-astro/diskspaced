@@ -1,5 +1,5 @@
 Name:      observatory-diskspace-client
-Version:   20220727
+Version:   20220803
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk space client.

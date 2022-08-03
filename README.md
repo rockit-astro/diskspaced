@@ -37,13 +37,10 @@ The `observatory-diskspace-server` and `observatory-diskspace-client` and `oneme
 
 The `observatory-diskspace-server` and `observatory-diskspace-client` and `clasp-diskspace-data` packages should be installed on the `clasp-tcs` machine.
 
-The `observatory-diskspace-server` and `observatory-diskspace-client` and `superwasp-diskspace-data` packages should be installed on the `superwasp-tcs` machine.
-
 After installing packages, the systemd service should be enabled:
 
 ```
-sudo systemctl enable diskspaced@<config>
-sudo systemctl start diskspaced@<config>
+sudo systemctl enable --now diskspaced@<config>
 ```
 
 where `config` is the name of the json file for the appropriate telescope.
@@ -66,8 +63,7 @@ sudo yum update
 
 The daemon should then be restarted to use the newly installed code:
 ```
-sudo systemctl stop diskspaced@<config>
-sudo systemctl start diskspaced@<config>
+sudo systemctl restart diskspaced@<config>
 ```
 
 ### Testing Locally

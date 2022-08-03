@@ -60,12 +60,12 @@ def print_status(config):
         latest = diskspace.last_measurement()
 
     if latest is not None:
+        available = round(latest['data_fs_available_bytes'] / 2**30)
+        total = round(latest['data_fs_total_bytes'] / 2**30)
+        percent = latest['data_fs_percent_available']
         date = datetime.datetime.strptime(latest['date'], '%Y-%m-%dT%H:%M:%SZ')
-        print('Data received ' + TFmt.Bold + str(date) + TFmt.Clear + ':')
-        print('Data partition: ' + TFmt.Bold + '{} / {} GiB ({}%) remaining'.format(
-            round(latest['data_fs_available_bytes'] / 2**30),
-            round(latest['data_fs_total_bytes'] / 2**30),
-            latest['data_fs_percent_available']) + TFmt.Clear)
+        print(f'Data received {TFmt.Bold}{date}{TFmt.Clear}:')
+        print(f"Data partition: {TFmt.Bold}{available} / {total} GiB ({percent}%) remaining{TFmt.Clear}")
         print()
     else:
         print('error: failed to query data')
@@ -84,7 +84,7 @@ def print_json(config):
 
 def print_usage():
     """Prints the utility help"""
-    print('Usage: {} <command>'.format(SCRIPT_NAME))
+    print(f'Usage: {SCRIPT_NAME} <command>')
     print()
     print('   status      print a human-readable summary of the disk usage')
     print('   json        print a machine-readable summary of the disk usage')
