@@ -1,5 +1,0 @@
-{
-  "daemon": "superwasp_diskspace",
-  "log_name": "diskspaced@superwasp",
-  "data_root_path": "/data/"
-}
