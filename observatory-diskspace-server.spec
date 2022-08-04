@@ -1,5 +1,5 @@
 Name:      observatory-diskspace-server
-Version:   20220630
+Version:   20220804
 Release:   0
 Url:       https://github.com/warwick-one-metre/diskspaced
 Summary:   Disk usage server.
