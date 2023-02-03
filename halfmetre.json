@@ -1,0 +1,5 @@
+{
+  "daemon": "halfmetre_diskspace",
+  "log_name": "diskspaced@halfmetre",
+  "data_root_path": "/data/"
+}

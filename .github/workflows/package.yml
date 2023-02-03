@@ -36,6 +36,7 @@ jobs:
           rocky-packages/set-spec-release.sh observatory-diskspace-client.spec
           rocky-packages/set-spec-release.sh python3-warwick-observatory-diskspace.spec
           rocky-packages/set-spec-release.sh onemetre-diskspace-data.spec
+          rocky-packages/set-spec-release.sh halfmetre-diskspace-data.spec
           rocky-packages/set-spec-release.sh clasp-diskspace-data.spec
           rocky-packages/set-spec-release.sh superwasp-diskspace-data.spec
       - name: Package RPMs
