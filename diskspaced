@@ -19,7 +19,7 @@
 
 import argparse
 import datetime
-import os
+import shutil
 import Pyro4
 from warwick.observatory.common import log
 from warwick.observatory.diskspace import Config
@@ -36,16 +36,12 @@ class DiskSpaceDaemon:
         May return None if no data is available"""
         now = datetime.datetime.utcnow
         try:
-            data = os.statvfs(self._config.data_root_path)
-            data_available = data.f_frsize * data.f_bavail
-            data_total = data.f_frsize * data.f_blocks
-            data_percent = round(data_available * 100 / data_total)
-
+            data = shutil.disk_usage(self._config.data_root_path)
             return {
                 'date': now().strftime('%Y-%m-%dT%H:%M:%SZ'),
-                'data_fs_available_bytes': data_available,
-                'data_fs_total_bytes': data_total,
-                'data_fs_percent_available': data_percent,
+                'data_fs_available_bytes': data.free,
+                'data_fs_total_bytes': data.total,
+                'data_fs_percent_available': round(data.free * 100. / data.total),
             }
 
         except Exception:

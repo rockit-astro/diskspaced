@@ -1,0 +1,5 @@
+{
+  "daemon": "warwick_diskspace",
+  "log_name": "diskspaced@warwick",
+  "data_root_path": "C:/"
+}
