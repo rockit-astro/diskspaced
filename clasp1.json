@@ -1,5 +1,0 @@
-{
-  "daemon": "clasp_diskspace_1",
-  "log_name": "diskspaced@clasp1",
-  "data_root_path": "/mnt/d/data"
-}
