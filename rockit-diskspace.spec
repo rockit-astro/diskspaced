@@ -27,6 +27,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/superwasp_cam2.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/superwasp_cam3.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/superwasp_cam4.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/warwick.json %{buildroot}%{_sysconfdir}/diskspaced/
 
 %package server
 Summary:  Disk usage server
@@ -89,5 +90,14 @@ Group:   Unspecified
 %{_sysconfdir}/diskspaced/superwasp_cam2.json
 %{_sysconfdir}/diskspaced/superwasp_cam3.json
 %{_sysconfdir}/diskspaced/superwasp_cam4.json
+
+%package data-warwick
+Summary: Disk usage configuration for the Windmill Hill observatory
+Group:   Unspecified
+%description data-warwick
+
+%files data-warwick
+%defattr(0644,root,root,-)
+%{_sysconfdir}/diskspaced/warwick.json
 
 %changelog
