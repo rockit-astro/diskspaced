@@ -20,7 +20,8 @@ mkdir -p %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/diskspaced@.service %{buildroot}%{_unitdir}
 %{__install} %{_sourcedir}/completion/diskspace %{buildroot}/etc/bash_completion.d/diskspace
 
-%{__install} %{_sourcedir}/config/clasp.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/clasp_tcs.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/clasp_das.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/halfmetre.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/onemetre.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/superwasp_das1.json %{buildroot}%{_sysconfdir}/diskspaced/
@@ -57,7 +58,8 @@ Group:   Unspecified
 
 %files data-clasp
 %defattr(0644,root,root,-)
-%{_sysconfdir}/diskspaced/clasp.json
+%{_sysconfdir}/diskspaced/clasp_tcs.json
+%{_sysconfdir}/diskspaced/clasp_das.json
 
 %package data-halfmetre
 Summary: Disk usage configuration for the half metre telescope
