@@ -1,0 +1,5 @@
+{
+  "daemon": "ngts_m06_diskspace",
+  "log_name": "diskspaced@ngts-m06",
+  "data_root_path": "/data/"
+}

@@ -27,6 +27,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/superwasp_das1.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/superwasp_das2.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/warwick.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/ngts_m06.json %{buildroot}%{_sysconfdir}/diskspaced/
 
 %package server
 Summary:  Disk usage server
@@ -97,5 +98,14 @@ Group:   Unspecified
 %files data-warwick
 %defattr(0644,root,root,-)
 %{_sysconfdir}/diskspaced/warwick.json
+
+%package data-ngts-m06
+Summary: Disk usage configuration for NGTS M06
+Group:   Unspecified
+%description data-ngts-m06
+
+%files data-ngts-m06
+%defattr(0644,root,root,-)
+%{_sysconfdir}/diskspaced/ngts_m06.json
 
 %changelog
