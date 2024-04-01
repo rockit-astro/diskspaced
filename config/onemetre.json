@@ -1,5 +1,5 @@
 {
   "daemon": "onemetre_tcs_diskspace",
   "log_name": "diskspaced",
-  "data_root_path": "/data/w1m"
+  "data_root_path": "/data"
 }
