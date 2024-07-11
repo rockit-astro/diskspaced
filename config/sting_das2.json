@@ -1,0 +1,5 @@
+{
+  "daemon": "sting_diskspace_das2",
+  "log_name": "diskspaced@sting_das2",
+  "data_root_path": "/data/"
+}

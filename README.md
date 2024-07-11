@@ -29,8 +29,8 @@ The automated packaging scripts will push 8 RPM packages to the observatory pack
 | rockit-diskspace-data-clasp     | Contains the json configuration for the CLASP DAS machine.            |
 | rockit-diskspace-data-halfmetre | Contains the json configuration for the half metre TCS.               |
 | rockit-diskspace-data-onemetre  | Contains the json configuration for the W1m TCS.                      |
-| rockit-diskspace-data-superwasp | Contains the json configuration for the SuperWASP DAS machines.       |
-| rockit-diskspace-data-warwick   | Contains the json configuration for the Windmill Hill TCS.   |
+| rockit-diskspace-data-sting     | Contains the json configuration for the STING DAS machines.           |
+| rockit-diskspace-data-warwick   | Contains the json configuration for the Windmill Hill TCS.            |
 | python3-rockit-diskspace        | Contains the python module with shared code.                          |
 
 After installing packages, the systemd service should be enabled:

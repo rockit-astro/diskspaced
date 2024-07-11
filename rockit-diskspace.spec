@@ -24,8 +24,8 @@ mkdir -p %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/clasp_das.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/halfmetre.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/onemetre.json %{buildroot}%{_sysconfdir}/diskspaced/
-%{__install} %{_sourcedir}/config/superwasp_das1.json %{buildroot}%{_sysconfdir}/diskspaced/
-%{__install} %{_sourcedir}/config/superwasp_das2.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/sting_das1.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/sting_das2.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/warwick.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/ngts_m06.json %{buildroot}%{_sysconfdir}/diskspaced/
 
@@ -80,15 +80,15 @@ Group:   Unspecified
 %defattr(0644,root,root,-)
 %{_sysconfdir}/diskspaced/onemetre.json
 
-%package data-superwasp
-Summary: Disk usage configuration for the SuperWASP telescope
+%package data-sting
+Summary: Disk usage configuration for the STING telescope
 Group:   Unspecified
-%description data-superwasp
+%description data-sting
 
-%files data-superwasp
+%files data-sting
 %defattr(0644,root,root,-)
-%{_sysconfdir}/diskspaced/superwasp_das1.json
-%{_sysconfdir}/diskspaced/superwasp_das2.json
+%{_sysconfdir}/diskspaced/sting_das1.json
+%{_sysconfdir}/diskspaced/sting_das2.json
 
 %package data-warwick
 Summary: Disk usage configuration for the Windmill Hill observatory
