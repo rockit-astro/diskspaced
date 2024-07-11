@@ -23,7 +23,7 @@ import json
 import os
 import sys
 import Pyro4
-from rockit.common import TFmt
+from rockit.common import print
 from rockit.diskspace import Config
 
 SCRIPT_NAME = os.path.basename(sys.argv[0])
@@ -64,8 +64,8 @@ def print_status(config):
         total = round(latest['data_fs_total_bytes'] / 2**30)
         percent = latest['data_fs_percent_available']
         date = datetime.datetime.strptime(latest['date'], '%Y-%m-%dT%H:%M:%SZ')
-        print(f'Data received {TFmt.Bold}{date}{TFmt.Clear}:')
-        print(f"Data partition: {TFmt.Bold}{available} / {total} GiB ({percent}%) remaining{TFmt.Clear}")
+        print(f'Data received [b]{date}[/b]:')
+        print(f'Data partition: [b]{available} / {total} GiB ({percent}%) remaining[/b]')
         print()
     else:
         print('error: failed to query data')
