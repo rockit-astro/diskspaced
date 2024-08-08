@@ -1,0 +1,5 @@
+{
+  "daemon": "portable_diskspace",
+  "log_name": "diskspaced@portable",
+  "data_root_path": "/home/ops/data"
+}

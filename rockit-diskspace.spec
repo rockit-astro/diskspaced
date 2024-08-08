@@ -28,6 +28,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/sting_das2.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/warwick.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/ngts_m06.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/portable.json %{buildroot}%{_sysconfdir}/diskspaced/
 
 %package server
 Summary:  Disk usage server
@@ -107,5 +108,14 @@ Group:   Unspecified
 %files data-ngts-m06
 %defattr(0644,root,root,-)
 %{_sysconfdir}/diskspaced/ngts_m06.json
+
+%package data-portable
+Summary: Disk usage configuration for the portable telescope
+Group:   Unspecified
+%description data-portable
+
+%files data-portable
+%defattr(0644,root,root,-)
+%{_sysconfdir}/diskspaced/portable.json
 
 %changelog
