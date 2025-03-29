@@ -29,6 +29,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/warwick.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/ngts_m06.json %{buildroot}%{_sysconfdir}/diskspaced/
 %{__install} %{_sourcedir}/config/portable.json %{buildroot}%{_sysconfdir}/diskspaced/
+%{__install} %{_sourcedir}/config/pdt.json %{buildroot}%{_sysconfdir}/diskspaced/
 
 %package server
 Summary:  Disk usage server
@@ -117,5 +118,14 @@ Group:   Unspecified
 %files data-portable
 %defattr(0644,root,root,-)
 %{_sysconfdir}/diskspaced/portable.json
+
+%package data-pdt
+Summary: Disk usage configuration for the PDT
+Group:   Unspecified
+%description data-pdt
+
+%files data-pdt
+%defattr(0644,root,root,-)
+%{_sysconfdir}/diskspaced/pdt.json
 
 %changelog

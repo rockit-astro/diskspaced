@@ -1,0 +1,5 @@
+{
+  "daemon": "pdt_diskspace",
+  "log_name": "diskspaced@pdt",
+  "data_root_path": "/data"
+}
