@@ -1,6 +1,6 @@
 Name:      rockit-diskspace
 Version:   %{_version}
-Release:   1
+Release:   1%{dist}
 Summary:   Disk usage monitor.
 Url:       https://github.com/rockit-astro/diskspaced
 License:   GPL-3.0

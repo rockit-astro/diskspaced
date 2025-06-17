@@ -1,6 +1,6 @@
 Name:           python3-rockit-diskspace
 Version:        %{_version}
-Release:        1
+Release:        1%{dist}
 License:        GPL3
 Summary:        Common backend code for the disk space daemons.
 Url:            https://github.com/rockit-astro/diskspaced
