@@ -17,7 +17,6 @@
 
 """Commandline client for querying the latest disk usage data"""
 
-import datetime
 import glob
 import json
 import os
@@ -63,8 +62,7 @@ def print_status(config):
         available = round(latest['data_fs_available_bytes'] / 2**30)
         total = round(latest['data_fs_total_bytes'] / 2**30)
         percent = latest['data_fs_percent_available']
-        date = datetime.datetime.strptime(latest['date'], '%Y-%m-%dT%H:%M:%SZ')
-        print(f'Data received [b]{date}[/b]:')
+        print(f'Data received [b]{latest["date"]}[/b]:')
         print(f'Data partition: [b]{available} / {total} GiB ({percent}%) remaining[/b]')
         print()
     else:

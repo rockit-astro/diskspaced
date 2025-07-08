@@ -34,11 +34,12 @@ class DiskSpaceDaemon:
     def last_measurement(self):
         """Query the latest valid measurement.
         May return None if no data is available"""
-        now = datetime.datetime.utcnow
+        # Uses datetime.timezone.utc rather than datetime.UTC for compatibility with python 3.9
+        now = datetime.datetime.now(tz=datetime.timezone.utc)
         try:
             data = shutil.disk_usage(self._config.data_root_path)
             return {
-                'date': now().strftime('%Y-%m-%dT%H:%M:%SZ'),
+                'date': now.strftime('%Y-%m-%dT%H:%M:%SZ'),
                 'data_fs_available_bytes': data.free,
                 'data_fs_total_bytes': data.total,
                 'data_fs_percent_available': round(data.free * 100. / data.total),
